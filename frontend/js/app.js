@@ -1,7 +1,8 @@
 
 "use strict";
 
-const API_BASE = "http://127.0.0.1:8000";
+// Deployed Render FastAPI backend
+const API_BASE = "https://trustvault-2gj8.onrender.com";
 
 const $ = (id) => document.getElementById(id);
 
@@ -64,7 +65,7 @@ function showAuth() {
 
 function friendlyError(error) {
   if (error instanceof TypeError) {
-    return "Cannot reach API. Check that FastAPI is running.";
+    return "Cannot reach API. Check the backend URL, CORS settings, and Render service status.";
   }
   return error.message || "Something went wrong.";
 }
@@ -108,7 +109,9 @@ async function apiRequest(path, options = {}) {
     }
 
     throw new Error(
-      typeof detail === "string" ? detail : `Request failed (${response.status})`
+      typeof detail === "string"
+        ? detail
+        : `Request failed (${response.status})`
     );
   }
 
@@ -171,7 +174,9 @@ $("loginForm").addEventListener("submit", async (event) => {
     });
 
     const data = result.data;
-    const token = data.access_token || data.accessToken ||
+    const token =
+      data.access_token ||
+      data.accessToken ||
       data.token?.access_token ||
       (typeof data.token === "string" ? data.token : null);
 
@@ -230,7 +235,7 @@ $("viewAllDocuments").addEventListener("click", () => {
   loadDocuments($("searchQuery").value);
 });
 
-// Render document data using DOM text nodes
+// Render documents safely using textContent
 function renderDocuments(docs) {
   documentsList.replaceChildren();
   $("overviewDocuments").replaceChildren();
@@ -242,19 +247,18 @@ function renderDocuments(docs) {
     empty.className = "empty";
     empty.textContent = "No documents found.";
     documentsList.appendChild(empty);
-
-    const overviewEmpty = empty.cloneNode(true);
-    $("overviewDocuments").appendChild(overviewEmpty);
+    $("overviewDocuments").appendChild(empty.cloneNode(true));
     return;
   }
 
-  docs.forEach(doc => {
+  docs.forEach((doc, index) => {
     const row = document.createElement("article");
     row.className = "document";
 
     const info = document.createElement("div");
     const title = document.createElement("h3");
-    title.textContent = doc.title || doc.original_filename || "Untitled document";
+    title.textContent =
+      doc.title || doc.original_filename || "Untitled document";
 
     const filename = document.createElement("p");
     filename.textContent = `File: ${doc.original_filename || "Unknown"}`;
@@ -277,20 +281,21 @@ function renderDocuments(docs) {
     row.append(info, actions);
     documentsList.appendChild(row);
 
-    // Keep the overview compact
-    if ($("overviewDocuments").children.length < 4) {
-      $("overviewDocuments").appendChild(row.cloneNode(true));
-    }
-  });
+    // Overview preview gets its own working download button
+    if (index < 4) {
+      const preview = row.cloneNode(true);
+      const previewActions = preview.querySelector(".actions");
+      previewActions.replaceChildren();
 
-  // Add working download controls to the overview rows.
-  $("overviewDocuments").querySelectorAll(".document").forEach((row, index) => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "btn btn-secondary";
-    button.textContent = "Download";
-    button.addEventListener("click", () => downloadDocument(docs[index]));
-    row.querySelector(".actions")?.appendChild(button);
+      const previewDownload = document.createElement("button");
+      previewDownload.type = "button";
+      previewDownload.className = "btn btn-secondary";
+      previewDownload.textContent = "Download";
+      previewDownload.addEventListener("click", () => downloadDocument(doc));
+
+      previewActions.appendChild(previewDownload);
+      $("overviewDocuments").appendChild(preview);
+    }
   });
 }
 
@@ -321,7 +326,7 @@ async function loadDocuments(query = "") {
   }
 }
 
-// Download
+// Download a document through the authenticated API
 async function downloadDocument(doc) {
   try {
     const result = await apiRequest(
@@ -333,7 +338,9 @@ async function downloadDocument(doc) {
     const link = document.createElement("a");
 
     link.href = url;
-    link.download = doc.original_filename || doc.title || "document";
+    link.download =
+      doc.original_filename || doc.title || "document";
+
     document.body.appendChild(link);
     link.click();
     link.remove();
@@ -359,7 +366,11 @@ $("uploadForm").addEventListener("submit", async (event) => {
   const category = $("documentCategory").value;
 
   if (!file || !title || !category) {
-    showMessage(uploadMessage, "Fill all fields and choose a file.", "error");
+    showMessage(
+      uploadMessage,
+      "Fill all fields and choose a file.",
+      "error"
+    );
     return;
   }
 
@@ -393,13 +404,19 @@ $("uploadForm").addEventListener("submit", async (event) => {
 
     event.currentTarget.reset();
     $("selectedFileName").textContent = "No file selected";
-    showMessage(uploadMessage, "Document uploaded successfully.", "success");
+
+    showMessage(
+      uploadMessage,
+      "Document uploaded successfully.",
+      "success"
+    );
+
     await loadDocuments($("searchQuery").value);
   } catch (error) {
     showMessage(uploadMessage, friendlyError(error), "error");
   } finally {
     button.disabled = false;
-    button.innerHTML = "<span aria-hidden=\"true\">⇧</span> Upload securely";
+    button.innerHTML = '<span aria-hidden="true">⇧</span> Upload securely';
   }
 });
 
@@ -427,7 +444,8 @@ $("globalSearch").addEventListener("keydown", async (event) => {
 // Display chosen file name
 $("documentFile").addEventListener("change", event => {
   const file = event.target.files[0];
-  $("selectedFileName").textContent = file ? file.name : "No file selected";
+  $("selectedFileName").textContent =
+    file ? file.name : "No file selected";
 });
 
 // Drag and drop
@@ -454,7 +472,9 @@ dropZone.addEventListener("drop", event => {
   const transfer = new DataTransfer();
   transfer.items.add(files[0]);
   $("documentFile").files = transfer.files;
-  $("documentFile").dispatchEvent(new Event("change", { bubbles: true }));
+  $("documentFile").dispatchEvent(
+    new Event("change", { bubbles: true })
+  );
 });
 
 // Logout
