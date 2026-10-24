@@ -63,59 +63,16 @@ function showAuth() {
   showLogin();
 }
 
+
+
 function friendlyError(error) {
+  console.error("TrustVault API error:", error);
+
   if (error instanceof TypeError) {
-    return "Cannot reach API. Check the backend URL, CORS settings, and Render service status.";
+    return "Network error: API connection failed. Check the backend URL and network request.";
   }
+
   return error.message || "Something went wrong.";
-}
-
-async function apiRequest(path, options = {}) {
-  const headers = new Headers(options.headers || {});
-
-  if (accessToken) {
-    headers.set("Authorization", `Bearer ${accessToken}`);
-  }
-
-  if (options.body && !(options.body instanceof FormData)) {
-    headers.set("Content-Type", "application/json");
-  }
-
-  const response = await fetch(API_BASE + path, {
-    ...options,
-    headers
-  });
-
-  const contentType = response.headers.get("content-type") || "";
-  let data = null;
-
-  if (contentType.includes("application/json")) {
-    data = await response.json();
-  } else if (!response.ok) {
-    data = { detail: await response.text() };
-  }
-
-  if (!response.ok) {
-    let detail = data?.detail;
-
-    if (Array.isArray(detail)) {
-      detail = detail.map(item => item.msg || "Invalid value").join(", ");
-    }
-
-    if (response.status === 401 && path.startsWith("/documents")) {
-      clearSession();
-      showAuth();
-      throw new Error("Session expired. Please sign in again.");
-    }
-
-    throw new Error(
-      typeof detail === "string"
-        ? detail
-        : `Request failed (${response.status})`
-    );
-  }
-
-  return { response, data };
 }
 
 // Switch between login and registration
