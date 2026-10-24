@@ -1,0 +1,603 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#142D4E">
+  <meta name="description" content="TrustVault secure document management workspace">
+  <title>TrustVault | Secure Documents</title>
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <!-- =========================
+       LOGIN / REGISTER PAGE
+  ========================== -->
+  <main class="auth-page" id="authCard">
+
+    <!-- LEFT BRANDING PANEL -->
+    <section class="brand-panel">
+
+      <div class="brand-header">
+        <div class="brand-shield" aria-hidden="true">✓</div>
+
+        <div>
+          <div class="brand-name">Trust<span>Vault</span></div>
+          <div class="brand-tagline">Secure Today, Trust Tomorrow.</div>
+        </div>
+      </div>
+
+      <div class="brand-copy">
+        <h1>
+          Your Documents.<br>
+          <span>In the Right Hands.</span>
+        </h1>
+
+        <p>
+          A secure document sharing platform with granular
+          access control and a complete audit trail.
+        </p>
+      </div>
+
+      <!-- SECURITY FEATURES -->
+      <div class="security-features">
+
+        <article class="security-feature">
+          <div class="feature-icon" aria-hidden="true">♙</div>
+          <h3>Access Control</h3>
+          <p>Control who can access your documents.</p>
+        </article>
+
+        <article class="security-feature">
+          <div class="feature-icon" aria-hidden="true">▤</div>
+          <h3>Secure Storage</h3>
+          <p>Keep your documents organized and protected.</p>
+        </article>
+
+        <article class="security-feature">
+          <div class="feature-icon" aria-hidden="true">✓</div>
+          <h3>Audit Trail</h3>
+          <p>Track document activities transparently.</p>
+        </article>
+
+      </div>
+
+      <!-- CSS-ONLY VAULT ILLUSTRATION -->
+      <!-- No external image file required -->
+      <div class="vault-scene" aria-label="Decorative secure vault illustration">
+
+        <div class="vault-glow"></div>
+        <div class="vault-floor"></div>
+
+        <div class="vault-box">
+          <div class="vault-door">
+
+            <div class="vault-emblem">
+              <div class="vault-lock"></div>
+            </div>
+
+            <div class="vault-handle"></div>
+
+            <span class="vault-bolt bolt-one"></span>
+            <span class="vault-bolt bolt-two"></span>
+            <span class="vault-bolt bolt-three"></span>
+            <span class="vault-bolt bolt-four"></span>
+
+          </div>
+        </div>
+
+        <div class="floating-file file-pdf" aria-hidden="true">PDF</div>
+        <div class="floating-file file-doc" aria-hidden="true">DOC</div>
+        <div class="floating-file file-safe" aria-hidden="true">✓</div>
+
+      </div>
+
+      <div class="brand-footer">
+        <span>Secure</span>
+        <span>—</span>
+        <span>Controlled</span>
+        <span>—</span>
+        <span>Transparent</span>
+      </div>
+
+    </section>
+
+    <!-- RIGHT LOGIN / REGISTER CARD -->
+    <section class="auth-card">
+
+      <h1 class="brand">Trust<span>Vault</span></h1>
+
+      <p class="subtitle">
+        Secure document sharing with access controlled by permissions.
+      </p>
+
+      <!-- REGISTER FORM -->
+      <section id="registerSection" class="hidden">
+
+        <h2>Create your account</h2>
+        <p class="subtitle">Register to manage your secure documents.</p>
+
+        <form id="registerForm">
+
+          <div class="form-group">
+            <label for="registerName">Full name</label>
+            <input
+              id="registerName"
+              name="full_name"
+              type="text"
+              placeholder="Enter your full name"
+              maxlength="100"
+              autocomplete="name"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="registerEmail">Email address</label>
+            <input
+              id="registerEmail"
+              name="email"
+              type="email"
+              placeholder="you@example.com"
+              maxlength="255"
+              autocomplete="email"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="registerPassword">Password</label>
+            <input
+              id="registerPassword"
+              name="password"
+              type="password"
+              placeholder="Create a strong password"
+              minlength="12"
+              autocomplete="new-password"
+              required
+            >
+          </div>
+
+          <button class="btn btn-primary" type="submit">
+            Create account
+          </button>
+
+        </form>
+
+        <p class="switch">
+          Already registered?
+          <button type="button" class="link" id="showLogin">
+            Sign in
+          </button>
+        </p>
+
+      </section>
+
+      <!-- LOGIN FORM -->
+      <section id="loginSection">
+
+        <h2>Welcome back</h2>
+        <p class="subtitle">Sign in to access your secure documents.</p>
+
+        <form id="loginForm">
+
+          <div class="form-group">
+            <label for="loginEmail">Email address</label>
+            <input
+              id="loginEmail"
+              name="email"
+              type="email"
+              placeholder="you@example.com"
+              autocomplete="username"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input
+              id="loginPassword"
+              name="password"
+              type="password"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              required
+            >
+          </div>
+
+          <button class="btn btn-primary" type="submit">
+            Sign in securely
+          </button>
+
+        </form>
+
+        <p class="switch">
+          New here?
+          <button type="button" class="link" id="showRegister">
+            Create an account
+          </button>
+        </p>
+
+      </section>
+
+      <div
+        id="authMessage"
+        class="message hidden"
+        role="status"
+        aria-live="polite"
+      ></div>
+
+      <div class="footer">
+        TrustVault · Secure document access
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       MAIN APPLICATION
+  ========================== -->
+  <div class="app-layout hidden" id="dashboardSection">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <a href="#" class="logo" aria-label="TrustVault home">
+        Trust<span>Vault</span>
+      </a>
+
+      <p class="sidebar-label">WORKSPACE</p>
+
+      <nav class="sidebar-nav" aria-label="Main navigation">
+
+        <button
+          type="button"
+          class="nav-link active"
+          data-view="dashboard"
+        >
+          <span class="nav-icon" aria-hidden="true">⌂</span>
+          Dashboard
+        </button>
+
+        <button
+          type="button"
+          class="nav-link"
+          data-view="documents"
+        >
+          <span class="nav-icon" aria-hidden="true">▤</span>
+          My Documents
+        </button>
+
+        <button
+          type="button"
+          class="nav-link"
+          data-view="upload"
+        >
+          <span class="nav-icon" aria-hidden="true">⇧</span>
+          Upload Document
+        </button>
+
+      </nav>
+
+      <div class="sidebar-bottom">
+
+        <div class="security-note">
+          <span class="security-symbol" aria-hidden="true">✓</span>
+
+          <div>
+            <strong>Secure workspace</strong>
+            <p>Access-controlled documents</p>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          class="nav-link logout-link"
+          id="logoutButton"
+        >
+          <span class="nav-icon" aria-hidden="true">↪</span>
+          Sign out
+        </button>
+
+      </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-panel">
+
+      <!-- TOP BAR -->
+      <header class="topbar">
+
+        <div class="search-box">
+          <span aria-hidden="true">⌕</span>
+
+          <input
+            id="globalSearch"
+            type="search"
+            placeholder="Search your documents..."
+            aria-label="Search your documents"
+          >
+        </div>
+
+        <div class="profile">
+
+          <div class="profile-avatar" aria-hidden="true">TV</div>
+
+          <div>
+            <div class="profile-name" id="profileName">Your account</div>
+            <div class="profile-email" id="profileEmail"></div>
+          </div>
+
+        </div>
+
+      </header>
+
+
+      <!-- DASHBOARD VIEW -->
+      <section class="page-content" id="overviewView">
+
+        <div class="page-header">
+
+          <div>
+            <p class="eyebrow">YOUR WORKSPACE</p>
+            <h1 id="welcomeText">Welcome to TrustVault</h1>
+            <p>Manage your documents in one secure workspace.</p>
+          </div>
+
+          <button
+            type="button"
+            class="btn btn-primary"
+            id="goToUpload"
+          >
+            <span aria-hidden="true">＋</span>
+            Upload document
+          </button>
+
+        </div>
+
+        <!-- SUMMARY CARDS -->
+        <div class="stats-grid">
+
+          <article class="stat-card">
+            <div class="stat-icon blue-icon" aria-hidden="true">▤</div>
+            <p>Total documents</p>
+            <h2 id="totalDocuments">—</h2>
+            <span class="stat-caption">Documents in your list</span>
+          </article>
+
+          <article class="stat-card">
+            <div class="stat-icon green-icon" aria-hidden="true">✓</div>
+            <p>Workspace</p>
+            <h2>Private</h2>
+            <span class="stat-caption">Authenticated access</span>
+          </article>
+
+          <article class="stat-card">
+            <div class="stat-icon purple-icon" aria-hidden="true">⌕</div>
+            <p>Search</p>
+            <h2>Ready</h2>
+            <span class="stat-caption">Find your documents</span>
+          </article>
+
+        </div>
+
+        <!-- RECENT DOCUMENTS -->
+        <section class="panel recent-panel">
+
+          <div class="panel-heading">
+
+            <div>
+              <h2>Recent documents</h2>
+              <p>Documents available in your workspace.</p>
+            </div>
+
+            <button
+              type="button"
+              class="btn btn-secondary"
+              id="viewAllDocuments"
+            >
+              View all
+            </button>
+
+          </div>
+
+          <div id="overviewDocuments" class="document-list">
+            <div class="empty">Loading your documents...</div>
+          </div>
+
+        </section>
+
+      </section>
+
+
+      <!-- UPLOAD VIEW -->
+      <section class="page-content hidden" id="uploadView">
+
+        <div class="page-header">
+          <div>
+            <p class="eyebrow">DOCUMENT WORKSPACE</p>
+            <h1>Upload document</h1>
+            <p>Upload and categorize your document securely.</p>
+          </div>
+        </div>
+
+        <section class="panel upload-panel">
+
+          <form id="uploadForm" class="upload-form">
+
+            <label class="drop-zone" id="dropZone" for="documentFile">
+
+              <span class="upload-cloud" aria-hidden="true">⇧</span>
+
+              <strong id="dropTitle">
+                Drag and drop your file here
+              </strong>
+
+              <span class="drop-subtitle">
+                or choose a file from your device
+              </span>
+
+              <span class="btn btn-secondary choose-file">
+                Choose file
+              </span>
+
+              <span class="upload-help">
+                PDF, TXT, DOCX, PNG, JPG · Maximum size 10 MB
+              </span>
+
+              <span class="selected-file" id="selectedFileName">
+                No file selected
+              </span>
+
+            </label>
+
+            <input
+              id="documentFile"
+              name="file"
+              type="file"
+              accept=".pdf,.txt,.docx,.png,.jpg,.jpeg"
+              required
+              class="visually-hidden"
+            >
+
+            <div class="form-grid">
+
+              <div class="form-group">
+                <label for="documentTitle">Document title</label>
+
+                <input
+                  id="documentTitle"
+                  name="title"
+                  type="text"
+                  maxlength="255"
+                  placeholder="e.g. Resume"
+                  required
+                >
+              </div>
+
+              <div class="form-group">
+                <label for="documentCategory">Category</label>
+
+                <select
+                  id="documentCategory"
+                  name="category"
+                  required
+                >
+                  <option value="">Select category</option>
+                  <option value="Personal">Personal</option>
+                  <option value="Academic">Academic</option>
+                  <option value="Work">Work</option>
+                  <option value="Finance">Finance</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+            </div>
+
+            <button
+              class="btn btn-primary upload-submit"
+              type="submit"
+            >
+              <span aria-hidden="true">⇧</span>
+              Upload securely
+            </button>
+
+          </form>
+
+          <div
+            id="uploadMessage"
+            class="message hidden"
+            role="status"
+            aria-live="polite"
+          ></div>
+
+        </section>
+
+      </section>
+
+
+      <!-- DOCUMENTS VIEW -->
+      <section class="page-content hidden" id="documentsView">
+
+        <div class="page-header">
+
+          <div>
+            <p class="eyebrow">YOUR FILE LIBRARY</p>
+            <h1>My documents</h1>
+            <p>Search and access documents available to your account.</p>
+          </div>
+
+          <button
+            type="button"
+            class="btn btn-primary"
+            id="goToUploadFromList"
+          >
+            + Upload document
+          </button>
+
+        </div>
+
+        <section class="panel">
+
+          <form id="searchForm" class="document-search">
+
+            <div class="search-box list-search">
+              <span aria-hidden="true">⌕</span>
+
+              <input
+                id="searchQuery"
+                type="search"
+                placeholder="Search by title or filename"
+              >
+            </div>
+
+            <button class="btn btn-primary" type="submit">
+              Search
+            </button>
+
+            <button
+              class="btn btn-secondary"
+              type="button"
+              id="clearSearch"
+            >
+              Clear
+            </button>
+
+          </form>
+
+          <div
+            id="documentsMessage"
+            class="message hidden"
+            role="status"
+            aria-live="polite"
+          ></div>
+
+          <div id="documentsList" class="document-list">
+            <div class="empty">Your documents will appear here.</div>
+          </div>
+
+        </section>
+
+      </section>
+
+      <footer class="app-footer">
+        TrustVault · Secure document management
+      </footer>
+
+    </main>
+
+  </div>
+
+  <!-- Existing JavaScript functionality -->
+  <script src="js/app.js" defer></script>
+
+</body>
+</html>
